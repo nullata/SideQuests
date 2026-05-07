@@ -1,2 +1,10 @@
+![nullata's sidequests](./images/sidequests.png)
+
 # SideQuests
-Useful side projects that are worth keeping around
+
+This is a repository where I publish useful mini-projects and tools that could serve a purpose to random travellers.
+
+Consider ⭐ starring ⭐ the repo if you found something useful in here.
+
+*Live long and Proper!* 🖖👽
+
