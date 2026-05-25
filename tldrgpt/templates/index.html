@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>tldrgpt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body class="h-screen overflow-hidden bg-zinc-950 text-zinc-100">
+    <div class="flex h-full min-h-0">
+      <aside class="flex h-full w-80 shrink-0 flex-col border-r border-zinc-800 bg-zinc-925">
+        <div class="border-b border-zinc-800 p-4">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <h1 class="text-lg font-semibold tracking-normal">tldrgpt</h1>
+              <p id="sourceMeta" class="mt-1 text-xs text-zinc-400"></p>
+            </div>
+            <button id="refreshButton" class="icon-button" title="Rescan source directory" aria-label="Rescan source directory">
+              <span aria-hidden="true">↻</span>
+            </button>
+          </div>
+          <button id="analyzeAllButton" class="mb-3 flex h-10 w-full items-center justify-center gap-2 rounded-md bg-emerald-500 px-3 text-sm font-semibold text-emerald-950 hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60">
+            <span aria-hidden="true">◆</span>
+            <span>Analyze All</span>
+          </button>
+          <label class="block text-xs font-medium uppercase tracking-wide text-zinc-500" for="searchInput">Search</label>
+          <input id="searchInput" class="mt-2 h-10 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-100 outline-none focus:border-emerald-500" placeholder="Name or tag" />
+        </div>
+        <div id="conversationList" class="min-h-0 flex-1 overflow-y-auto p-2"></div>
+      </aside>
+
+      <main class="flex min-w-0 flex-1 flex-col">
+        <header class="flex min-h-20 items-center justify-between gap-4 border-b border-zinc-800 px-5 py-3">
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h2 id="conversationTitle" class="truncate text-xl font-semibold">Select a conversation</h2>
+              <span id="statusBadge" class="hidden rounded-full px-2 py-1 text-xs font-medium"></span>
+            </div>
+            <div id="tagRow" class="mt-2 flex flex-wrap gap-2"></div>
+          </div>
+          <button id="analyzeButton" class="flex h-10 items-center gap-2 rounded-md border border-emerald-500/40 bg-emerald-500/10 px-4 text-sm font-semibold text-emerald-200 hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-50">
+            <span aria-hidden="true">▶</span>
+            <span>Analyze</span>
+          </button>
+        </header>
+
+        <section class="grid min-h-0 flex-1 grid-cols-1 gap-4 p-4 xl:grid-cols-2">
+          <div class="panel">
+            <div class="panel-header">
+              <span>Conversation</span>
+            </div>
+            <iframe id="conversationFrame" class="h-full w-full bg-white" title="Rendered conversation"></iframe>
+            <div id="emptyConversation" class="empty-state">No conversation selected.</div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <span>AI Analysis</span>
+              <button id="viewJsonButton" class="panel-action" type="button" disabled>View JSON</button>
+            </div>
+            <article id="summaryPane" class="prose-lite overflow-y-auto p-5 text-sm leading-6 text-zinc-200"></article>
+            <div id="emptySummary" class="empty-state">Analysis will appear here.</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="jsonModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="jsonModalTitle">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <div class="min-w-0">
+            <h3 id="jsonModalTitle" class="truncate text-sm font-semibold text-zinc-100">Conversation JSON</h3>
+            <p id="jsonModalSubtitle" class="mt-1 truncate text-xs text-zinc-500"></p>
+          </div>
+          <button id="closeJsonButton" class="icon-button" type="button" title="Close JSON viewer" aria-label="Close JSON viewer">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <pre id="jsonViewer" class="json-viewer"></pre>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
